@@ -1,0 +1,7 @@
+[user]
+	email = alecbnono@gmail.com
+	name = Alec Nono
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
