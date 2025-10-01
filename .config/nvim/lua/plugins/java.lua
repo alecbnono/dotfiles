@@ -13,6 +13,9 @@ return {
 								autobuild = {
 									enabled = false,
 								},
+								configuration = {
+									sourcePaths = { "src" },
+								},
 							},
 						},
 					},
