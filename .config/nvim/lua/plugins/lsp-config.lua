@@ -219,8 +219,7 @@ return {
 			local servers = {
 				clangd = {},
 				-- gopls = {},
-				pylsp = {},
-				-- rust_analyzer = {},
+				rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				--    https://github.com/pmizio/typescript-tools.nvim
@@ -320,16 +319,7 @@ return {
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
-		keys = {
-			{
-				"<leader>f",
-				function()
-					require("conform").format({ async = true, lsp_format = "fallback" })
-				end,
-				mode = "",
-				desc = "[F]ormat buffer",
-			},
-		},
+		keys = {},
 		opts = {
 			notify_on_error = false,
 			format_on_save = function(bufnr)
