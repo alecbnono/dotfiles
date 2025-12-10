@@ -13,6 +13,7 @@ alias vim="nvim"
 alias vi="nvim"
 alias ff="fastfetch"
 alias nf="neofetch"
+alias files="nautilus"
 eval "$(starship init bash)"
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
