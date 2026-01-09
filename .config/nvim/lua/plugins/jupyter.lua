@@ -100,12 +100,14 @@ return {
 	-- Jupytext — sync Python scripts with notebook format (# %%)
 	---------------------------------------------------------------------------
 	{
-		"GCBallesteros/jupytext.nvim",
-		ft = "python",
+		"goerz/jupytext.nvim",
 		opts = {
-			style = "hydrogen",
-			auto_save = false, -- avoid lag
-			check_filetype = true,
+			-- The CLI format to use. "py:percent" is best for molten.nvim
+			format = "py:percent",
+			-- Automatically sync when saving or opening
+			autosync = true,
+			-- Patterns for files that should be recognized as syncable
+			sync_patterns = { "*.py" },
 		},
 	},
 }
