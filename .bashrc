@@ -14,6 +14,7 @@ alias vi="nvim"
 alias ff="fastfetch"
 alias nf="neofetch"
 alias files="nautilus"
+alias ipynb-export='jupyter nbconvert --to pdf --execute --ExecutePreprocessor.kernel_name="python3" --pdf-engine=xelatex'
 eval "$(starship init bash)"
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
