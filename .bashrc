@@ -14,11 +14,14 @@ alias vi="nvim"
 alias ff="fastfetch"
 alias nf="neofetch"
 alias files="nautilus"
-alias ipynb-export='jupyter nbconvert --to pdf --execute --ExecutePreprocessor.kernel_name="python3" --pdf-engine=xelatex'
-eval "$(starship init bash)"
+alias ipynb-export='jupyter nbconvert --to pdf --execute --ExecutePreprocessor.kernel_name="python3"'
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
+
 # Created by `pipx` on 2025-09-18 04:47:59
 export PATH="$PATH:/home/alec/.local/bin"
+
+eval "$(starship init bash)"
