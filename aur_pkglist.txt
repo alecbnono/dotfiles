@@ -1,0 +1,8 @@
+cmatrix-git
+droidcam
+nerd-fonts-git
+paru
+paru-debug
+python-jupytext
+python-pynput
+zoom
