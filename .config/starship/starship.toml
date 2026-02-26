@@ -20,21 +20,22 @@ pine = '#31748f'
 foam = '#9ccfd8'
 iris = '#c4a7e7'
 
+
+
 [directory]
-style = "bold foam"
-truncation_length = 3
+style = "foam"
+truncation_length = 2
 truncation_symbol = ""
 
 [git_branch]
-symbol = "" # He often removes the icon entirely or uses a simple branch char
-style = "bold red"
-format = "[git:\\(](bold blue)[$branch]($style)[\\)](bold blue) "
+style = "bold love"
+format = "[git:\\(](blue)[$branch]($style)[\\)](blue) "
 
 [git_status]
 style = "bold iris"
 format = "([$all_status$ahead_behind]($style)) "
 
 [character]
-success_symbol = "[➜](bold green)"
-error_symbol = "[➜](bold red)"
-vimcmd_symbol = "[➜](bold green)"
+success_symbol = "[➜ ](bold green)"
+error_symbol = "[➜ ](bold red)"
+vimcmd_symbol = "[➜ ](bold green)"
