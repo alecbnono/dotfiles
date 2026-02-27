@@ -1,107 +1,68 @@
-@import "mocha.css";
-
 * {
-  font-family: Noto Sans Nerd Font;
-  font-size: 17px;
-  min-height: 0;
-  color: @text;
-}
-
-window#waybar {
-  /* you can also GTK3 CSS functions! */
-  background-color: alpha(@base, 0.66);
-  border-radius: 1rem;
-}
-
-#waybar {
-  background: transparent;
-  color: @text;
-}
-
-#workspaces {
-  border-radius: 1rem;
-  margin: 5px;
-  background-color: @surface0;
-  margin-left: 1rem;
-}
-
-#workspaces button {
-  color: @sky;
-  border-radius: 1rem;
-  padding: 0.4rem;
-}
-
-#workspaces button.active {
-  color: @mauve;
-}
-
-#workspaces button:hover {
-  color: @sapphire;
-}
-
-#custom-music,
-#tray,
-#backlight,
-#clock,
-#battery,
-#pulseaudio,
-#custom-lock,
-#custom-power {
-  background-color: @surface0;
-  padding: 0.5rem 1rem;
-  margin: 5px 0;
-}
-
-#clock {
-  color: @blue;
-  border-radius: 0px 1rem 1rem 0px;
-  margin-right: 1rem;
-}
-
-#battery {
-  color: @green;
-}
-
-#battery.charging {
-  color: @green;
-}
-
-#battery.warning:not(.charging) {
-  color: @red;
-}
-
-#backlight {
-  color: @yellow;
-}
-
-#backlight,
-#battery {
+  font-family: "JetBrainsMono Nerd Font", "Roboto", sans-serif;
+  font-size: 13px;
+  border: none;
   border-radius: 0;
 }
 
+window#waybar {
+  background: transparent;
+  margin-bottom: -5px;
+}
+
+/* Island Bubbles */
+.modules-left,
+.modules-center,
+.modules-right {
+  background: #191724; /* Rose Pine Moon Base */
+  border: 2px solid #26233a; /* Iris Border */
+  padding: 2px 12px;
+  border-radius: 12px;
+  color: #e0def4;
+}
+
+/* Workspaces */
+#workspaces button {
+  padding: 0 8px;
+  color: #6e6a86;
+}
+#workspaces button.active {
+  color: #ea9a97; /* Rose */
+}
+
+/* Individual Module Colors */
+#clock {
+  color: #ea9a97;
+  font-weight: bold;
+}
 #pulseaudio {
-  color: @maroon;
-  border-radius: 1rem 0px 0px 1rem;
-  margin-left: 1rem;
+  color: #c4a7e7;
+  margin-right: 12px;
 }
-
-#custom-music {
-  color: @mauve;
-  border-radius: 1rem;
+#battery {
+  color: #f6c177;
+  margin-right: 12px;
 }
-
-#custom-lock {
-  border-radius: 1rem 0px 0px 1rem;
-  color: @lavender;
+#cpu {
+  color: #9ccfd8;
+  margin-right: 12px;
 }
-
-#custom-power {
-  margin-right: 1rem;
-  border-radius: 0px 1rem 1rem 0px;
-  color: @red;
+#memory {
+  color: #31748f;
 }
-
 #tray {
-  margin-right: 1rem;
-  border-radius: 1rem;
+  margin-left: 10px;
+}
+
+/* Critical States */
+#battery.critical,
+#battery.warning.discharging {
+  color: #eb6f92; /* Love */
+  animation: blink 1s steps(5, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    color: #e0def4;
+  }
 }
