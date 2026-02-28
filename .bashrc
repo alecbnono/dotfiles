@@ -24,4 +24,19 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 # Created by `pipx` on 2025-09-18 04:47:59
 export PATH="$PATH:/home/alec/.local/bin"
 
+nvim-nuke() {
+    echo "Nuking Neovim share, state, and cache..."
+    
+    # 1. Remove the plugin installations (where lazy.nvim/mason live)
+    rm -rf ~/.local/share/nvim
+    
+    # 2. Remove state (undo history, search history, shada)
+    rm -rf ~/.local/state/nvim
+    
+    # 3. Remove the cache (temporary files)
+    rm -rf ~/.cache/nvim
+    
+    echo "Done. Restart nvim to re-trigger plugin installation."
+}
+
 eval "$(starship init bash)"

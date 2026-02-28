@@ -1,131 +1,322 @@
-# NeoVim Configuration For Fullstack Java Developers
+# kickstart.nvim
 
-Welcome to the start, or continuation of your NeoVim journey, I'm excited to have you on board!
+## Introduction
 
-This repository holds the configuration code for my simple yet effective NeoVim configuration for Fullstack Java Developers who's primary job is to develop Spring Boot Applications and Frontends using TypeScript and React.
+A starting point for Neovim that is:
 
-Of course this is just a starting point for you to configure, and just the tip of the ice berg when it comes to customization, so whenever you move onto different languages, or want more features I have designed the structure of the configuratuion to be easily customized.
+* Small
+* Single-file
+* Completely Documented
 
-This configuration repository goes along with my tutorial on how to setup NeoVim for Java Developers, which you can find [here](https://youtu.be/zbpF3te0M3g) to follow along and get explanations of the different plugins we are configuring.
+**NOT** a Neovim distribution, but instead a starting point for your configuration.
 
-## Plugins
+## Installation
 
-I attempted to keep the plugins in this configuration to a minimum to reduce the bulk, but also to just build a strong foundation to build on top of. I did not want to include a ton of plugins that people might or might not immediately uninstall because they felt they didn't need them.
+### Install Neovim
 
-This configuration uses the ever popular Lazy.nvim to manage the plugins because of the simplicity, popularity, and the great documenation around it. The great thing about this starter and Lazy.nvim in general, is that once you have installed and configured just a few plugins, you will basically know how to install any new plugin you like once you start to add your own tastes.
+Kickstart.nvim targets *only* the latest
+['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest
+['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim.
+If you are experiencing issues, please make sure you have at least the latest
+stable version. Most likely, you want to install neovim via a [package
+manager](https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package).
+To check your neovim version, run `nvim --version` and make sure it is not
+below the latest
+['stable'](https://github.com/neovim/neovim/releases/tag/stable) version. If
+your chosen install method only gives you an outdated version of neovim, find
+alternative [installation methods below](#alternative-neovim-installation-methods).
 
-Below I have listed all the plugins which are included in the configuration, and which I think are almost vital to a great development experience when it comes to Java and TypeScript:
+### Install External Dependencies
 
-### [Lazy Plugin Manager](https://github.com/folke/lazy.nvim)
+External Requirements:
+- Basic utils: `git`, `make`, `unzip`, C Compiler (`gcc`)
+- [ripgrep](https://github.com/BurntSushi/ripgrep#installation),
+  [fd-find](https://github.com/sharkdp/fd#installation)
+- Clipboard tool (xclip/xsel/win32yank or other depending on the platform)
+- A [Nerd Font](https://www.nerdfonts.com/): optional, provides various icons
+  - if you have it set `vim.g.have_nerd_font` in `init.lua` to true
+- Emoji fonts (Ubuntu only, and only if you want emoji!) `sudo apt install fonts-noto-color-emoji`
+- Language Setup:
+  - If you want to write Typescript, you need `npm`
+  - If you want to write Golang, you will need `go`
+  - etc.
 
-A modern plugin manager for NeoVim developed my Folke Lemaitre, a legend in the NeoVim community, you will be seeing more plugins of his make it into the configuration.
+> [!NOTE]
+> See [Install Recipes](#Install-Recipes) for additional Windows and Linux specific notes
+> and quick install snippets
 
-### [Dracula ColorScheme](https://github.com/Mofiqul/dracula.nvim)
+### Install Kickstart
 
-Everyone needs a color scheme to personalize and escape the drab default colors of NeoVim. My personal favorite is the medium/gray blue with pastelly colors of Dracula. Of course taste in colors is subjective and this can easily be configured to be a different color scheme.
+> [!NOTE]
+> [Backup](#FAQ) your previous configuration (if any exists)
 
-### [Nvim-Tree](https://github.com/nvim-tree/nvim-tree.lua)
+Neovim's configurations are located under the following paths, depending on your OS:
 
-Nvim-Tree is a file explorer plugin for Neovim, providing a convenient and visually appealing way to navigate and manage files and directories within your project directly from the Neovim interface. It offers features like directory tree view, file operations, and customizable key bindings for efficient file manipulation.
+| OS | PATH |
+| :- | :--- |
+| Linux, MacOS | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim` |
+| Windows (cmd)| `%localappdata%\nvim\` |
+| Windows (powershell)| `$env:LOCALAPPDATA\nvim\` |
 
-### [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+#### Recommended Step
 
-Telescope is a versatile Neovim plugin for fuzzy finding and browsing various data, such as files, buffers, git files, and more, within your project. It offers a streamlined interface for searching, previewing, and selecting items using fuzzy search algorithms, enabling efficient navigation and interaction with your Neovim environment.
+[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo
+so that you have your own copy that you can modify, then install by cloning the
+fork to your machine using one of the commands below, depending on your OS.
 
-### [Treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+> [!NOTE]
+> Your fork's URL will be something like this:
+> `https://github.com/<your_github_username>/kickstart.nvim.git`
 
-Treesitter is a Neovim plugin that provides advanced syntax highlighting and parsing capabilities based on the Tree-sitter parsing library. It offers improved accuracy and performance compared to traditional regex-based syntax highlighting, enabling features like better code comprehension, enhanced code navigation, and contextual understanding within Neovim.
+You likely want to remove `lazy-lock.json` from your fork's `.gitignore` file
+too - it's ignored in the kickstart repo to make maintenance easier, but it's
+[recommended to track it in version control](https://lazy.folke.io/usage/lockfile).
 
-### [Mason](https://github.com/williamboman/mason.nvim)
+#### Clone kickstart.nvim
 
-Mason.nvim is a Neovim plugin specifically focused on managing Language Server Protocol (LSP) binaries. It automates the installation and management of these binaries, making it easier for Neovim users to set up and use language servers for features like code completion, syntax checking, and more. This plugin simplifies the configuration process, ensuring a smoother integration of language server capabilities within Neovim.
+> [!NOTE]
+> If following the recommended step above (i.e., forking the repo), replace
+> `nvim-lua` with `<your_github_username>` in the commands below
 
-### [Mason LSP Config](https://github.com/williamboman/mason-lspconfig.nvim)
+<details><summary> Linux and Mac </summary>
 
-Mason-lspconfig.nvim is a Neovim plugin designed to work in conjunction with Mason.nvim for managing Language Server Protocol (LSP) configurations. It provides a set of pre-configured settings for various programming languages and frameworks, making it easier to set up and use language servers within Neovim. This plugin simplifies the process of configuring LSP servers by offering ready-made configurations tailored to different development environments, improving productivity for Neovim users.
+```sh
+git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+```
 
-### [Nvim JDTLS](https://github.com/mfussenegger/nvim-jdtls)
+</details>
 
-Nvim-jdtls is a Neovim plugin that integrates the Java language server (JDTLS) with Neovim, providing features like code completion, syntax checking, and refactoring for Java development within the Neovim environment. It leverages the Language Server Protocol (LSP) to offer intelligent code assistance and navigation tools, enhancing the Java development experience for Neovim users.
+<details><summary> Windows </summary>
 
-### [Lsp Config](https://github.com/neovim/nvim-lspconfig)
+If you're using `cmd.exe`:
 
-Nvim-lspconfig is a Neovim plugin that simplifies the configuration of Language Server Protocol (LSP) servers within Neovim. It provides a straightforward interface to set up and manage various language servers for features like code completion, syntax checking, and more. This plugin streamlines the integration of LSP capabilities into Neovim, enhancing the development experience for users across different programming languages and frameworks.
+```
+git clone https://github.com/nvim-lua/kickstart.nvim.git "%localappdata%\nvim"
+```
 
-### [Nvim Dap](https://github.com/mfussenegger/nvim-dap)
+If you're using `powershell.exe`
 
-Nvim-dap is a Neovim plugin that brings debugger integration to Neovim, allowing users to debug their code directly within the editor. It implements the Debug Adapter Protocol (DAP), providing features such as breakpoints, variable inspection, stepping through code, and more. This plugin enhances the development workflow by offering a seamless debugging experience within the Neovim environment.
+```
+git clone https://github.com/nvim-lua/kickstart.nvim.git "${env:LOCALAPPDATA}\nvim"
+```
+
+</details>
+
+### Post Installation
+
+Start Neovim
+
+```sh
+nvim
+```
+
+That's it! Lazy will install all the plugins you have. Use `:Lazy` to view
+the current plugin status. Hit `q` to close the window.
+
+#### Read The Friendly Documentation
+
+Read through the `init.lua` file in your configuration folder for more
+information about extending and exploring Neovim. That also includes
+examples of adding popularly requested plugins.
+
+> [!NOTE]
+> For more information about a particular plugin check its repository's documentation.
+
+
+### Getting Started
+
+[The Only Video You Need to Get Started with Neovim](https://youtu.be/m8C0Cq9Uv9o)
+
+### FAQ
+
+* What should I do if I already have a pre-existing Neovim configuration?
+  * You should back it up and then delete all associated files.
+  * This includes your existing init.lua and the Neovim files in `~/.local`
+    which can be deleted with `rm -rf ~/.local/share/nvim/`
+* Can I keep my existing configuration in parallel to kickstart?
+  * Yes! You can use [NVIM_APPNAME](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME)`=nvim-NAME`
+    to maintain multiple configurations. For example, you can install the kickstart
+    configuration in `~/.config/nvim-kickstart` and create an alias:
+    ```
+    alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
+    ```
+    When you run Neovim using `nvim-kickstart` alias it will use the alternative
+    config directory and the matching local directory
+    `~/.local/share/nvim-kickstart`. You can apply this approach to any Neovim
+    distribution that you would like to try out.
+* What if I want to "uninstall" this configuration:
+  * See [lazy.nvim uninstall](https://lazy.folke.io/usage#-uninstalling) information
+* Why is the kickstart `init.lua` a single file? Wouldn't it make sense to split it into multiple files?
+  * The main purpose of kickstart is to serve as a teaching tool and a reference
+    configuration that someone can easily use to `git clone` as a basis for their own.
+    As you progress in learning Neovim and Lua, you might consider splitting `init.lua`
+    into smaller parts. A fork of kickstart that does this while maintaining the
+    same functionality is available here:
+    * [kickstart-modular.nvim](https://github.com/dam9000/kickstart-modular.nvim)
+  * Discussions on this topic can be found here:
+    * [Restructure the configuration](https://github.com/nvim-lua/kickstart.nvim/issues/218)
+    * [Reorganize init.lua into a multi-file setup](https://github.com/nvim-lua/kickstart.nvim/pull/473)
+
+### Install Recipes
+
+Below you can find OS specific install instructions for Neovim and dependencies.
+
+After installing all the dependencies continue with the [Install Kickstart](#install-kickstart) step.
+
+#### Windows Installation
+
+<details><summary>Windows with Microsoft C++ Build Tools and CMake</summary>
+Installation may require installing build tools and updating the run command for `telescope-fzf-native`
+
+See `telescope-fzf-native` documentation for [more details](https://github.com/nvim-telescope/telescope-fzf-native.nvim#installation)
+
+This requires:
+
+- Install CMake and the Microsoft C++ Build Tools on Windows
+
+```lua
+{'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+```
+</details>
+<details><summary>Windows with gcc/make using chocolatey</summary>
+Alternatively, one can install gcc and make which don't require changing the config,
+the easiest way is to use choco:
+
+1. install [chocolatey](https://chocolatey.org/install)
+either follow the instructions on the page or use winget,
+run in cmd as **admin**:
+```
+winget install --accept-source-agreements chocolatey.chocolatey
+```
+
+2. install all requirements using choco, exit the previous cmd and
+open a new one so that choco path is set, and run in cmd as **admin**:
+```
+choco install -y neovim git ripgrep wget fd unzip gzip mingw make
+```
+</details>
+<details><summary>WSL (Windows Subsystem for Linux)</summary>
+
+```
+wsl --install
+wsl
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo apt update
+sudo apt install make gcc ripgrep unzip git xclip neovim
+```
+</details>
 
-### [Spring Boot Nvim](https://github.com/elmcgill/springboot-nvim)
+#### Linux Install
+<details><summary>Ubuntu Install Steps</summary>
 
-Spring Boot Nvim is a NeoVim plugin that brings quality of life features to Java/Spring Boot developers. It sets up a convient way to map a keybinding to run Spring Boot applications in a new terminal window. Automatically adds package declarations to new files. Incrementally compiles the Java project on save to enable Spring Boot DevTools to work properly, and provides convient ways to create new classes, enums and interfaces, with more features to come.
+```
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo apt update
+sudo apt install make gcc ripgrep unzip git xclip neovim
+```
+</details>
+<details><summary>Debian Install Steps</summary>
 
-### [None-LS](https://github.com/nvimtools/none-ls.nvim)
+```
+sudo apt update
+sudo apt install make gcc ripgrep unzip git xclip curl
 
-None-ls is a Neovim plugin that facilitates language server protocol (LSP) support for languages that lack dedicated language servers. It provides a generic solution for syntax checking, code completion, and other language-specific features by leveraging external tools or scripts. This plugin extends Neovim's capabilities to a wider range of programming languages, enhancing the editing experience for users working with less common or unsupported languages.
+# Now we install nvim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim-linux-x86_64
+sudo mkdir -p /opt/nvim-linux-x86_64
+sudo chmod a+rX /opt/nvim-linux-x86_64
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
-### [LuaSnip](https://github.com/L3MON4D3/LuaSnip)
+# make it available in /usr/local/bin, distro installs to /usr/bin
+sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/
+```
+</details>
+<details><summary>Fedora Install Steps</summary>
 
-Luasnip is a Neovim plugin that enhances snippet support within the editor. It allows users to define and expand snippets of code quickly using simple triggers and placeholders. Luasnip offers a customizable and efficient way to insert commonly used code patterns, reducing typing and improving productivity during coding sessions.
+```
+sudo dnf install -y gcc make git ripgrep fd-find unzip neovim
+```
+</details>
 
-### [Cmp LuaSnip](https://github.com/saadparwaiz1/cmp_luasnip)
+<details><summary>Arch Install Steps</summary>
 
-Cmp_luasnip is a Neovim plugin that integrates the Luasnip snippet engine with the nvim-cmp completion framework. It enhances the completion experience by allowing users to expand snippets while typing, providing quick access to predefined code snippets within the context of code completion. This plugin streamlines the process of inserting and using snippets alongside other completion sources in Neovim, improving productivity during coding sessions.
+```
+sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
+```
+</details>
 
-### [Friendly Snippets](https://github.com/rafamadriz/friendly-snippets)
+### Alternative neovim installation methods
 
-Friendly Snippets is a Neovim plugin designed to simplify the creation and management of code snippets. It provides a collection of predefined snippets for various programming languages and frameworks, making it easier for users to insert common code patterns with minimal effort. Friendly Snippets enhances the coding experience in Neovim by offering a library of reusable code snippets accessible through simple triggers, thereby improving productivity and reducing typing efforts during coding sessions.
+For some systems it is not unexpected that the [package manager installation
+method](https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package)
+recommended by neovim is significantly behind. If that is the case for you,
+pick one of the following methods that are known to deliver fresh neovim versions very quickly.
+They have been picked for their popularity and because they make installing and updating
+neovim to the latest versions easy. You can also find more detail about the
+available methods being discussed
+[here](https://github.com/nvim-lua/kickstart.nvim/issues/1583).
 
-### [Cmp Nvim LSP](https://github.com/hrsh7th/cmp-nvim-lsp)
 
-Cmp-nvim-lsp is a Neovim plugin that integrates the nvim-cmp completion framework with the built-in Language Server Protocol (LSP) client in Neovim. It enhances code completion by providing intelligent suggestions based on the capabilities of LSP servers for various programming languages. This plugin enables seamless integration of LSP-powered completion features into Neovim, improving the development experience by offering context-aware suggestions and enhancing productivity during coding sessions.
+<details><summary>Bob</summary>
 
-### [Nvim Cmp](https://github.com/hrsh7th/nvim-cmp)
+[Bob](https://github.com/MordechaiHadad/bob) is a Neovim version manager for
+all plattforms. Simply install
+[rustup](https://rust-lang.github.io/rustup/installation/other.html),
+and run the following commands:
 
-Nvim-cmp is a powerful completion framework for Neovim that enhances code completion capabilities within the editor. It provides a fast and customizable interface for context-aware completion suggestions, supporting various completion sources such as language servers, snippets, and more. nvim-cmp improves the development workflow by offering intelligent and efficient code completion features, helping users write code faster and with fewer errors.
+```bash
+rustup default stable
+rustup update stable
+cargo install bob-nvim
+bob use stable
+```
 
-### [Cmp Buffer](https://github.com/hrsh7th/cmp-buffer)
+</details>
 
-Cmp-buffer is a Neovim plugin that extends the functionality of the nvim-cmp completion framework by adding a completion source that suggests items from currently open buffers. It enhances code completion by providing suggestions based on the contents of buffers, allowing users to quickly access and insert previously written code snippets or references within their current editing session. This plugin further enriches the completion experience in Neovim, offering a convenient way to access and reuse code from existing buffers while writing new code.
+<details><summary>Homebrew</summary>
 
-### [Cmp Path](https://github.com/hrsh7th/cmp-path)
+[Homebrew](https://brew.sh) is a package manager popular on Mac and Linux.
+Simply install using [`brew install`](https://formulae.brew.sh/formula/neovim).
 
-Cmp-path is a Neovim plugin designed to enhance the completion capabilities of the nvim-cmp completion framework by adding a completion source that suggests file paths relative to the current working directory. It facilitates code completion by providing quick access to files within the project directory structure, allowing users to efficiently navigate and include file paths in their code without manually typing them out. This plugin contributes to a smoother development workflow in Neovim by offering context-aware file path suggestions, thereby improving productivity and reducing typing efforts during coding sessions.
+</details>
 
-### [Autopairs](https://github.com/windwp/nvim-autopairs)
+<details><summary>Flatpak</summary>
 
-Autopairs is a Neovim plugin that automates the insertion of matching pairs of characters, such as parentheses, brackets, and quotes. It enhances the editing experience by automatically inserting closing characters when an opening character is typed, and vice versa, thereby reducing the need for manual typing and minimizing errors in code formatting. This plugin streamlines the process of writing code in Neovim by providing intelligent and context-aware pairing of characters, improving productivity and code consistency for users.
+Flatpak is a package manager for applications that allows developers to package their applications
+just once to make it available on all Linux systems. Simply [install flatpak](https://flatpak.org/setup/)
+and setup [flathub](https://flathub.org/setup) to [install neovim](https://flathub.org/apps/io.neovim.nvim).
 
-### [Git Signs](https://github.com/lewis6991/gitsigns.nvim)
+</details>
 
-Git Signs is a Neovim plugin that provides Git integration by displaying signs in the gutter area to indicate Git changes within a file. It offers visual cues such as added, modified, or deleted lines, as well as highlighting the changes since the last commit. This plugin enhances the version control experience in Neovim, allowing users to quickly identify and navigate Git changes within their codebase, improving productivity and code management workflows.
+<details><summary>asdf and mise-en-place</summary>
 
-### [Fugitive](https://github.com/tpope/vim-fugitive)
+[asdf](https://asdf-vm.com/) and [mise](https://mise.jdx.dev/) are tool version managers,
+mostly aimed towards project-specific tool versioning. However both support managing tools
+globally in the user-space as well:
 
-Fugitive is a comprehensive Git wrapper for Neovim, providing a wide range of Git commands and features directly within the editor. It allows users to execute Git commands, view Git status, manage branches, diff changes, and interact with the Git history seamlessly from within Neovim. Vim-fugitive enhances the version control experience by integrating Git functionalities into the editor, streamlining the development workflow and improving productivity for Git users.
+<details><summary>mise</summary>
 
-### [Lualine](https://github.com/nvim-lualine/lualine.nvim)
+[Install mise](https://mise.jdx.dev/getting-started.html), then run:
 
-Lualine is a Neovim plugin that provides a customizable and feature-rich statusline. It offers various components and themes to display information such as file path, Git branch, mode indicator, and more in the statusline. Lualine enhances the visual appearance of Neovim and provides useful information to users, improving their editing experience and productivity.
+```bash
+mise plugins install neovim
+mise use neovim@stable
+```
 
-### [Which-key](https://github.com/folke/which-key.nvim)
+</details>
 
-Which-key is a Neovim plugin that helps users discover and remember key mappings by displaying a popup window that lists available keybindings when a partial key sequence is entered. It provides a convenient way to explore and learn key mappings within Neovim, improving users' efficiency and reducing the need to memorize complex key combinations. This plugin enhances the discoverability of commands and keybindings, facilitating a smoother and more intuitive editing experience in Neovim.
+<details><summary>asdf</summary>
 
-### [Harpoon](https://github.com/ThePrimeagen/harpoon)
+[Install asdf](https://asdf-vm.com/guide/getting-started.html), then run:
 
-Harpoon is a Neovim plugin designed to simplify navigation within projects by providing quick access to frequently used files and directories. It offers a sidebar interface that allows users to bookmark and organize project files, making it easier to navigate between different parts of the project. Harpoon enhances productivity in Neovim by streamlining the process of jumping between files and directories within a project, thereby improving the development workflow.
+```bash
+asdf plugin add neovim
+asdf install neovim stable
+asdf set neovim stable --home
+asdf reshim neovim
+```
 
-### [Comment](https://github.com/numToStr/Comment.nvim)
+</details>
 
-Comment is a Neovim plugin that enhances code commenting functionality by providing intuitive and customizable key mappings for commenting and uncommenting code blocks. It supports various comment styles for different programming languages and offers features like toggling comments, commenting out entire lines, and handling nested comments efficiently. comment.nvim streamlines the commenting process in Neovim, improving code readability and productivity for users during development.
-
-## Support
-
-Consider supporting me on social media for putting this configuration together
-
-[Youtube](https://www.youtube.com/channel/UCOVeQepH1fCRgxeH6kuz7OQ)
-
-[Twitter](https://www.twitter.com/UnknownKoder)
-
-[Twitch](https://www.twitch.tv/unknownkoderyt)
+</details>
