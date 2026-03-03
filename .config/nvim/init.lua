@@ -15,33 +15,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
+-- Set leaders before loading lazy.nvim
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- LOAD CORE SETTINGS
--- This ensures your options and personal keymaps are ready before plugins load
+-- Load options & keymaps
 require 'config.options'
 require 'config.keymaps'
-
--- Declare a few options for lazy
-local opts = {
-  change_detection = {
-    -- Don't notify us every time a change is made to the configuration
-    notify = false,
-  },
-  checker = {
-    -- Automatically check for package updates
-    enabled = true,
-    -- Don't spam us with notification every time there is an update available
-    notify = false,
-  },
-  ui = {
-    border = 'rounded',
-  },
-}
 
 -- Setup lazy.nvim
 require('lazy').setup {
@@ -49,6 +29,7 @@ require('lazy').setup {
     { import = 'core' },
     { import = 'plugins' },
   },
-  opts,
+  change_detection = { notify = false },
+  checker = { enabled = true, notify = false },
+  ui = { border = 'rounded' },
 }
-

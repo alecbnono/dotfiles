@@ -1,11 +1,19 @@
-return { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    config = function()
-      local filetypes = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
-      require('nvim-treesitter').install(filetypes)
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = filetypes,
-        callback = function() vim.treesitter.start() end,
-      })
-    end,
-  }
+-- Treesitter (High-Performance Syntax Highlighting)
+return {
+  'nvim-treesitter/nvim-treesitter',
+  build = ':TSUpdate',
+  cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
+  event = { 'BufReadPost', 'BufNewFile' },
+  opts = {
+    ensure_installed = {
+      'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 
+      'markdown_inline', 'query', 'vim', 'vimdoc', 'python', 'go', 
+      'rust', 'javascript', 'typescript', 'json', 'css', 'jupyter'
+    },
+    highlight = { enable = true },
+    indent = { enable = true },
+  },
+  config = function(_, opts)
+    require('nvim-treesitter.config').setup(opts)
+  end,
+}
