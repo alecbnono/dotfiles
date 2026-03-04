@@ -15,8 +15,9 @@ return {
     local builtin = require 'telescope.builtin'
     local actions = require 'telescope.actions'
 
-    require('telescope').setup({
+    require('telescope').setup {
       defaults = {
+        wrap_results = true,
         layout_config = { horizontal = { preview_width = 0.55 } },
         mappings = {
           i = {
@@ -30,7 +31,12 @@ return {
       extensions = {
         ['ui-select'] = { require('telescope.themes').get_dropdown {} },
       },
-    })
+      pickers = {
+        diagnostics = {
+          line_width = 'full',
+        },
+      },
+    }
     require('telescope').load_extension 'ui-select'
 
     -- Keymaps
