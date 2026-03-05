@@ -25,9 +25,7 @@ return {
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('lsp-attach-group', { clear = true }),
       callback = function(event)
-        local map = function(keys, func, desc)
-          vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-        end
+        local map = function(keys, func, desc) vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc }) end
 
         -- Blink.cmp will handle references/definitions with its own picker where configured
         map('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
@@ -37,10 +35,10 @@ return {
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
         map('K', vim.lsp.buf.hover, 'Hover Documentation')
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-        
+
         -- Centered Centering Page Movements (Integrated with LSP workflow)
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.supports_method('textDocument/documentHighlight') then
+        if client and client.supports_method 'textDocument/documentHighlight' then
           local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -62,7 +60,7 @@ return {
       pyright = {},
       gopls = {},
       rust_analyzer = {},
-      ts_ls = {},
+      vtsls = {},
       lua_ls = {
         settings = {
           Lua = {
