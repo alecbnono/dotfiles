@@ -47,3 +47,28 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.inccommand = "split"
 
 vim.opt.swapfile = false
+
+-- Nerd Font support (JetBrainsMono Nerd Font via Kitty)
+vim.g.have_nerd_font = true
+
+-- Python provider: detect venv early, before plugins load
+vim.g.python3_host_prog = (function()
+  local venv = os.getenv('VIRTUAL_ENV')
+  if venv and venv ~= '' then
+    local venv_py = venv .. '/bin/python'
+    if vim.fn.executable(venv_py) == 1 then
+      return venv_py
+    end
+  end
+
+  local cwd_venv = vim.fn.getcwd() .. '/.venv/bin/python'
+  if vim.fn.executable(cwd_venv) == 1 then
+    return cwd_venv
+  end
+
+  if vim.fn.executable('python3') == 1 then
+    return vim.fn.exepath('python3')
+  end
+
+  return '/usr/bin/python'
+end)()

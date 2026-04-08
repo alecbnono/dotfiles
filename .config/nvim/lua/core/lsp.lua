@@ -1,10 +1,9 @@
--- LSP Configurations (Kickstart + Optimized Logic)
+-- LSP Configurations (Neovim 0.12+ Native API)
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
-    { 'mason.nvim', opts = {} },
-    'williamboman/mason-lspconfig.nvim',
+    { 'mason-org/mason.nvim', opts = {} },
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'saghen/blink.cmp', -- Speedy completion engine
     { 'j-hui/fidget.nvim', opts = {} }, -- Status updates for LSP
@@ -79,20 +78,32 @@ return {
     -- Get capabilities from blink.cmp
     local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-    -- Mason Tool Installer
-    local ensure_installed = vim.tbl_keys(servers)
-    vim.list_extend(ensure_installed, { 'stylua', 'prettier', 'black', 'clang-format', 'jupytext' })
+    -- Mason Tool Installer (ensures servers + formatters/linters are installed)
+    -- Mason package names differ from LSP config names for some servers
+    local ensure_installed = {
+      'clangd',
+      'pyright',
+      'gopls',
+      'rust-analyzer',
+      'vtsls',
+      'lua-language-server',
+      'jdtls',
+      'stylua',
+      'prettier',
+      'prettierd',
+      'black',
+      'isort',
+      'clang-format',
+      'jupytext',
+      'markdownlint',
+    }
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    -- Mason LSP Config Setup
-    require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
-    }
+    -- Configure and enable LSP servers using Neovim 0.12+ native API
+    for server_name, server_opts in pairs(servers) do
+      server_opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_opts.capabilities or {})
+      vim.lsp.config(server_name, server_opts)
+    end
+    vim.lsp.enable(vim.tbl_keys(servers))
   end,
 }

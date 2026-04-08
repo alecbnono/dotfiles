@@ -12,3 +12,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
 vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
+
+-- Comment toggle using Neovim 0.10+ built-in gc/gcc operators
+vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Comment Line" })
+vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Comment Selected" })

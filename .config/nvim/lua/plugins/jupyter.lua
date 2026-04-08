@@ -1,6 +1,8 @@
 return {
 	{
 		"3rd/image.nvim",
+		enabled = (os.getenv("TERM") or ""):find("kitty") ~= nil
+			or (os.getenv("TERM_PROGRAM") or ""):find("kitty") ~= nil,
 		opts = {
 			backend = "kitty",
 			max_width = 100,
@@ -19,22 +21,7 @@ return {
 		build = ":UpdateRemotePlugins",
 		ft = { "python", "quarto", "markdown" },
 		config = function()
-			local function detect_python()
-				local venv = os.getenv("VIRTUAL_ENV")
-				if venv and venv ~= "" then
-					return venv .. "/bin/python"
-				end
-
-				local cwd = vim.fn.getcwd()
-				local local_venv = cwd .. "/.venv/bin/python"
-				if vim.fn.filereadable(local_venv) == 1 then
-					return local_venv
-				end
-
-				return "/usr/bin/python"
-			end
-
-			vim.g.python3_host_prog = detect_python()
+			-- python3_host_prog is set early in config/options.lua
 
 			vim.g.molten_image_provider = "image.nvim"
 			vim.g.molten_auto_open_output = true
