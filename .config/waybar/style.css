@@ -47,8 +47,18 @@ window#waybar {
   color: #9ccfd8;
   margin-right: 12px;
 }
+#custom-gpu-usage {
+  color: #ebbcba;
+  margin-right: 12px;
+}
+
+#custom-gpu-memory {
+  color: #ea9a97;
+}
+
 #memory {
   color: #31748f;
+  margin-right: 12px;
 }
 #tray {
   margin-left: 10px;

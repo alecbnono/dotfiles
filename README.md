@@ -8,6 +8,7 @@ My personal dotfiles for a clean, productive, and aesthetically pleasing Linux d
 - **Bar:** [Waybar](https://github.com/Alexays/Waybar)
 - **Terminal:** [Kitty](https://sw.kovidgoyal.net/kitty/)
 - **Editor:** [Neovim](https://neovim.io/) (Configured with Lazy.nvim)
+- **Coding Agent:** [OpenCode](https://opencode.ai/) (Rose Pine Moon custom theme)
 - **Shell:** Bash + [Starship](https://starship.rs/)
 - **Multiplexer:** [Tmux](https://github.com/tmux/tmux/wiki) (Plugins managed via TPM)
 - **Launcher:** [Fuzzel](https://codeberg.org/dnkl/fuzzel) / [Wofi](https://hg.sr.ht/~scoopta/wofi)
@@ -21,6 +22,7 @@ My personal dotfiles for a clean, productive, and aesthetically pleasing Linux d
 │   ├── hypr/            # Hyprland, Hyprlock, Hypridle, Hyprpaper
 │   ├── kitty/           # Terminal configuration
 │   ├── nvim/            # Neovim setup (Lazy.nvim)
+│   ├── opencode/        # OpenCode TUI config and custom themes
 │   ├── starship/        # Prompt configuration
 │   ├── tmux/            # Tmux specific config
 │   └── waybar/          # Top bar configuration
@@ -46,7 +48,13 @@ I recommend using a tool like `stow` or manually symlinking files to your `$HOME
 ```bash
 # Example manual symlink for hyprland
 ln -s ~/dotfiles/.config/hypr ~/.config/hypr
+
+# Example manual symlink for OpenCode
+ln -s ~/dotfiles/.config/opencode ~/.config/opencode
 ```
+
+### OpenCode Theme
+OpenCode uses the custom `rose-pine-moon` theme defined in `.config/opencode/themes/rose-pine-moon.json`, selected via `.config/opencode/tui.json`.
 
 ### Neovim Setup
 Neovim will automatically install plugins via `lazy.nvim` on the first run.

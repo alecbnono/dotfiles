@@ -11,7 +11,7 @@
   "margin-right": 15,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["battery", "pulseaudio", "cpu", "memory", "tray"],
+  "modules-right": ["battery", "pulseaudio", "cpu", "memory", "custom/gpu-usage", "custom/gpu-memory", "tray"],
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
@@ -48,6 +48,16 @@
       "default": ["", "", " "],
     },
     "on-click": "pavucontrol",
+  },
+  "custom/gpu-usage": {
+    "interval": 2,
+    "format": "{}",
+    "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | awk -F', ' 'NR==1 {printf \"󰢮 %s%%\", $1}'",
+  },
+  "custom/gpu-memory": {
+    "interval": 2,
+    "format": "{}",
+    "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' 'NR==1 {printf \"󰢮 %.1fGB/%.1fGB\",$1/1024, $2/1024}'",
   },
   "cpu": {
     "format": " {usage}%",
